@@ -1,10 +1,27 @@
-from Tkinter import Tk, Label, Button
+try:
+    # for Python2
+    from Tkinter import *
+except ImportError:
+    # for Python3
+    from tkinter import *
 
 
-class Basic:
+# All methods required for main page
+def key(event, window):
+    window.quit
+
+# Main page class
+class MainPage:
+
+    # Initialize main page window
     def __init__(self, window):
+
+        # Settings
         self.master = window
-        window.title("A simple GUI")
+        window.title("McCliff")
+        window.state('zoomed')
+        window.minsize(width=600, height=600)
+        window.bind("<Escape>", key(window))
 
         self.label2 = Label(window, text="New one.")
         self.label2.pack()
@@ -12,17 +29,17 @@ class Basic:
         self.label = Label(window, text="This is our first GUI!")
         self.label.pack()
 
-        self.greet_button = Button(window, text="Greet", command=self.greet)
+        self.greet_button = Button(window, text="Greet", command=window.quit)
         self.greet_button.pack()
 
         self.close_button = Button(window, text="Close", command=window.quit)
         self.close_button.pack()
 
-        window.minsize(width=600, height=600)
+# end mainPage
 
-    def greet(self):
-        print("Greetings!")
+def run_mccliff():
+    root = Tk()
+    my_gui = MainPage(root)
+    root.mainloop()
 
-root = Tk()
-my_gui = Basic(root)
-root.mainloop()
+run_mccliff()
