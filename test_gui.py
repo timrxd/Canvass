@@ -5,7 +5,7 @@ except ImportError:
     # for Python3
     from tkinter import *
 
-from main_page import *
+from frames.main_page import *
 
 
 # Main page class
