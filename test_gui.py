@@ -5,7 +5,7 @@ except ImportError:
     # for Python3
     from tkinter import *
 
-from frames.main_page import *
+# from frames.main_page import *
 
 
 # Main page class
@@ -17,9 +17,10 @@ class MainPage:
         # Settings:
         self.master = window
         window.title("McCliff")
-        window.state('zoomed')
+        window.state('normal')
         window.minsize(width=600, height=600)
-        window.configure(background='red')  # Debug red
+        window.configure(background='aliceblue')
+        window.attributes('-zoomed', True)
 
         # Keybindings
         window.bind("<Escape>", lambda event: self.close_window())
@@ -32,26 +33,31 @@ class MainPage:
         title.pack(side=LEFT)
         title_bar.pack(side=TOP, fill=X, ipady=10)
 
+        # Content Frame
+        view_frame = Frame(window, bg="lightgrey")
+        view_frame.pack(fill=BOTH, expand=True)
+        view_frame.grid_columnconfigure(0, weight=1)
+        view_frame.grid_columnconfigure(1, weight=2)
+        view_frame.grid_columnconfigure(2, weight=1)
+        view_frame.grid_rowconfigure(0,weight=1)
+
         # Borders
-        left_frame = Frame(window, background="aliceblue", width=window.winfo_screenwidth()/6)
-        left_frame.pack(side=LEFT, fill=Y)
-        right_frame = Frame(window, background="aliceblue", width=window.winfo_screenwidth()/6)
-        right_frame.pack(side=RIGHT, fill=Y)
+        left_frame = Frame(view_frame, background="aliceblue")
+        left_frame.grid(row=0, column=0, sticky="nswe")  # .pack(side=LEFT, fill=Y)
+        right_frame = Frame(view_frame, background="aliceblue")
+        right_frame.grid(row=0, column=2, sticky="nswe")  # .pack(side=RIGHT, fill=Y)
 
         # Main Frame
-
-        self.main_frame = Frame(window, bg="aliceblue")
-        self.main_frame.pack(fill=BOTH, expand=True)
-
+        self.main_frame = Frame(view_frame, bg="aliceblue")
+        self.main_frame.grid(row=0, column=1, sticky="nswe")  # .pack(fill=BOTH, expand=1)
 
         # Main Frame Contents
-
         self.label = Label(self.main_frame, text="Survey Title", font=("Times", 48), bg=self.main_frame.cget('bg'))
         self.label.pack(ipady=15)
 
         content_frame = Frame(self.main_frame, bg="lightsteelblue")
         content_frame.pack(fill=BOTH, expand=True, padx=25)
-        scroll = ScrollFrame(content_frame)
+        scroll = Frame(content_frame)
         scroll.pack(fill=BOTH, expand=True)
 
         # self.close_button = Button(self.main_frame, text="Close", command=window.quit)
