@@ -5,8 +5,8 @@ except ImportError:
     # for Python3
     from tkinter import *
 
-# from frames.main_page import *
-
+#from Frames import *
+import Frames.main_page
 
 # Main page class
 class MainPage:
@@ -20,7 +20,7 @@ class MainPage:
         window.state('normal')
         window.minsize(width=600, height=600)
         window.configure(background='aliceblue')
-        window.attributes('-zoomed', True)
+        # window.attributes('-zoomed', True)
 
         # Keybindings
         window.bind("<Escape>", lambda event: self.close_window())
@@ -34,7 +34,7 @@ class MainPage:
         title_bar.pack(side=TOP, fill=X, ipady=10)
 
         # Content Frame
-        view_frame = Frame(window, bg="lightgrey")
+        view_frame = Frame(window, bg="white")
         view_frame.pack(fill=BOTH, expand=True)
         view_frame.grid_columnconfigure(0, weight=1)
         view_frame.grid_columnconfigure(1, weight=2)
@@ -55,13 +55,10 @@ class MainPage:
         self.label = Label(self.main_frame, text="Survey Title", font=("Times", 48), bg=self.main_frame.cget('bg'))
         self.label.pack(ipady=15)
 
-        content_frame = Frame(self.main_frame, bg="lightsteelblue")
+        content_frame = Frame(self.main_frame, bg="white")
         content_frame.pack(fill=BOTH, expand=True, padx=25)
-        scroll = Frame(content_frame)
+        scroll = MainFrame(content_frame)
         scroll.pack(fill=BOTH, expand=True)
-
-        # self.close_button = Button(self.main_frame, text="Close", command=window.quit)
-        # self.close_button.pack()
 
     def close_window(self):
         self.master.quit()

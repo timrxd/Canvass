@@ -8,6 +8,15 @@ except ImportError:
     from tkinter import *
 
 
+class MainFrame(Frame):
+    def __init__(self, parent, *args, **kwargs):
+        Frame.__init__(self, parent)
+
+        self.survey_button = Button(self, text="Make Survey")
+        self.survey_button.pack()
+        self.data_button = Button(self, text="Analyze Data")
+        self.data_button.pack()
+
 class ScrollFrame(Frame):
     def __init__(self, parent, *args, **kwargs):
         Frame.__init__(self, parent)

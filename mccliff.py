@@ -7,7 +7,7 @@ except ImportError:
     # for Python3
     from tkinter import *
 
-from frames.main_page import *
+from Frames.main_page import *
 
 
 class McCliff:
