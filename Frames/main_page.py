@@ -8,31 +8,20 @@ except ImportError:
     from tkinter import *
 
 
-class MainFrame(Frame):
+class MainPage(Frame):
     def __init__(self, parent, *args, **kwargs):
-        Frame.__init__(self, parent)
+        Frame.__init__(self, parent, *args, **kwargs)
 
-        self.survey_button = Button(self, text="Make Survey")
-        self.survey_button.pack()
-        self.data_button = Button(self, text="Analyze Data")
-        self.data_button.pack()
+        self.grid_columnconfigure(0, weight=1)
+        self.grid_columnconfigure(1, weight=2)
+        self.grid_columnconfigure(2, weight=1)
 
-class ScrollFrame(Frame):
-    def __init__(self, parent, *args, **kwargs):
-        Frame.__init__(self, parent)
-        self.text = Text(self, *args, **kwargs)
-        self.vsb = Scrollbar(self, orient="vertical", command=self.text.yview)
-        self.text.configure(yscrollcommand=self.vsb.set)
-        self.vsb.pack(side="right", fill="y")
-        self.text.pack(side="left", fill="both", expand=True)
+        for x in range(0, 10):
+            self.grid_rowconfigure(x, weight=1)
 
-        # expose some text methods as methods on this object
-        self.insert = self.text.insert
-        self.delete = self.text.delete
-        self.mark_set = self.text.mark_set
-        self.get = self.text.get
-        self.index = self.text.index
-        self.search = self.text.search
-
+        self.survey_button = Button(self, text="Make Survey", font=("Times", 18), bg="steelblue")
+        self.survey_button.grid(row=3, column=1, sticky="nswe")
+        self.data_button = Button(self, text="Analyze Data", font=("Times", 18), bg="steelblue")
+        self.data_button.grid(row=5, column=1, sticky="nswe")
 
 # end

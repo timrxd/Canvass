@@ -1,2 +1,2 @@
 __author__ = 'Tim'
-__all__=["main_page.MainFrame"]
+from .main_page import MainPage

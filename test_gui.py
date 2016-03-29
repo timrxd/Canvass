@@ -5,11 +5,28 @@ except ImportError:
     # for Python3
     from tkinter import *
 
-#from Frames import *
-import Frames.main_page
+from Frames import *
+
+class ScrollFrame(Frame):
+    def __init__(self, parent, *args, **kwargs):
+        Frame.__init__(self, parent)
+        self.text = Text(self, *args, **kwargs)
+        self.vsb = Scrollbar(self, orient="vertical", command=self.text.yview)
+        self.text.configure(yscrollcommand=self.vsb.set)
+        self.vsb.pack(side="right", fill="y")
+        self.text.pack(side="left", fill="both", expand=True)
+
+        # expose some text methods as methods on this object
+        self.insert = self.text.insert
+        self.delete = self.text.delete
+        self.mark_set = self.text.mark_set
+        self.get = self.text.get
+        self.index = self.text.index
+        self.search = self.text.search
+
 
 # Main page class
-class MainPage:
+class TestPage:
 
     # Initialize main page window
     def __init__(self, window):
@@ -57,7 +74,7 @@ class MainPage:
 
         content_frame = Frame(self.main_frame, bg="white")
         content_frame.pack(fill=BOTH, expand=True, padx=25)
-        scroll = MainFrame(content_frame)
+        scroll = MainPage(content_frame)
         scroll.pack(fill=BOTH, expand=True)
 
     def close_window(self):
@@ -69,7 +86,7 @@ class MainPage:
 # Start up program
 def run_mccliff():
     root = Tk()
-    my_gui = MainPage(root)
+    my_gui = TestPage(root)
     root.mainloop()
 
 run_mccliff()
