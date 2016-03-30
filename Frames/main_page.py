@@ -24,4 +24,5 @@ class MainPage(Frame):
         self.data_button = Button(self, text="Analyze Data", font=("Times", 18), bg="steelblue")
         self.data_button.grid(row=5, column=1, sticky="nswe")
 
+
 # end

@@ -1,4 +1,4 @@
-__author__ = 'Tim'
+from Frames import *
 
 try:
     # for Python2
@@ -7,8 +7,7 @@ except ImportError:
     # for Python3
     from tkinter import *
 
-# from PIL import Image, ImageTk
-from Frames import *
+__author__ = 'Tim'
 
 
 class McCliff:
@@ -19,9 +18,12 @@ class McCliff:
         # Settings:
         self.master = window
         window.title("McCliff")
-        window.state('zoomed')
         window.minsize(width=600, height=600)
         window.configure(background='red')  # Debug red
+        try:
+            window.state('zoomed')
+        except TclError:
+            window.minsize(width=1280, height=1000)  # window.attributes('-zoomed', True)
 
         # Keybindings
         window.bind("<Escape>", lambda event: self.close_window())
@@ -31,8 +33,8 @@ class McCliff:
         # Title Bar
         title_bar = Frame(window, relief=RAISED, borderwidth=1, bg='steelblue')
         # img = Image.open("logo.pgm")
-        logo = PhotoImage("logo.pgm")
-        title = Label(image=logo)
+        logo = PhotoImage(file="logo.pgm")
+        title = Label(title_bar, image=logo)
         title.image = logo
         # title = Label(title_bar, text="McCliff", font=("Times", 48), bg='steelblue')
         title.pack(side=LEFT)
@@ -54,10 +56,22 @@ class McCliff:
 
         # Initialize with MainPage
         self.main_frame = MainPage(view_frame, bg="white")
+        self.main_frame.survey_button.configure(command=self.to_survey_select)
         self.main_frame.grid(row=0, column=1, sticky="nswe")
+
+        # Setup all other pages
+        self.surveys = SelectSurvey(view_frame, bg="white")
+        # self.surveys.grid(row=0, column=1, sticky="nswe")
+
+        # Hide all sub-frames
+        self.surveys.grid_forget()
 
     def close_window(self):
         self.master.quit()
+
+    def to_survey_select(self):
+        self.main_frame.grid_forget()
+        self.surveys.grid(row=0, column=1, sticky="nswe")
 
 # end McCliff
 
