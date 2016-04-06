@@ -2,7 +2,10 @@
  TODO
 ======
 
-PRIORITY
+IMPORTANT
+ - back button on all pages (universal?)
+ - SQL server
+ - 
 
 
 
@@ -10,3 +13,4 @@ PRIORITY
 NOT
  - fix survey select header/table ratios
  - scroll wheel bindings for survey select scroll bar
+ - lol updater

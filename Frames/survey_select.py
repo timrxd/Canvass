@@ -76,9 +76,13 @@ class SelectSurvey(Frame):
         for row in test_data:
             c = 0
             for col in row:
-                Label(self.scroll.frame, text=row[c], bg="lightyellow", anchor="w", relief=RAISED)\
+                Label(self.scroll.frame, text=row[c], bg="lightyellow", anchor="w", relief=RAISED,
+                      onclick=self.open_survey(row[0]))\
                     .grid(column=c, row=r, sticky="nswe", pady=2)
                 c +=1
             r += 1
+
+    def open_survey(self, name):
+        print(name)
 
 # end
