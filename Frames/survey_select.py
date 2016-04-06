@@ -28,10 +28,10 @@ class SelectSurvey(Frame):
         # Why are the weights different? FUCK
 
         # Row 3 Headers
-        self.top_bar.grid_columnconfigure(0, weight=1)
+        self.top_bar.grid_columnconfigure(0, weight=10)
         self.top_bar.grid_columnconfigure(1, weight=1)
         self.top_bar.grid_columnconfigure(2, weight=1)
-        self.top_bar.grid_columnconfigure(3, weight=1)
+        self.top_bar.grid_columnconfigure(3, weight=10)
         self.top_bar.grid_columnconfigure(4, weight=1)
 
         h_row = 3
@@ -50,42 +50,33 @@ class SelectSurvey(Frame):
         self.date = Label(self.top_bar, text="Event Date", bg="lightgray", relief=RAISED, anchor="w")
         self.date.grid(row=h_row, column=4, sticky="nswe")
 
-        # Survey Table
-        self.scroll_table = ScrollFrame(self, bg="white")
-        self.scroll_table.pack(fill=BOTH, expand=TRUE)
-        self.survey_table = Frame(self.scroll_table, bg="white")
-        self.survey_table.pack(fill=BOTH, expand=TRUE)
-
-        # Scrollable WIP
-        self.scroll_table.vsb = Scrollbar(self.scroll_table, orient="vertical", command=self.survey_table.yview)
-        self.survey_table.configure(yscrollcommand=self.vsb.set)
-        self.scroll_table.vsb.pack(side="right", fill="y")
-        self.survey_table.pack(side="left", fill="both", expand=True)
-
-        self.survey_table.grid_columnconfigure(0, weight=1)
-        self.survey_table.grid_columnconfigure(1, weight=1)
-        self.survey_table.grid_columnconfigure(2, weight=1)
-        self.survey_table.grid_columnconfigure(3, weight=1)
-        self.survey_table.grid_columnconfigure(4, weight=1)
-
         # Eventually SQL call
         test_data = [["Loyola", "2/21", "100", "Baltimore", "1/1"],
                      ["Central", "1/25", "88", "Flemington", "2/2"],
-                     ["North", "2/21", "100", "Baltimore", "1/1"],
-                     ["South", "1/25", "88", "Flemington", "2/2"],
-                     ["Del Val", "2/21", "100", "Baltimore", "1/1"],
-                     ["JP Case", "1/25", "88", "Flemington", "2/2"]
+                     ["North", "3/21", "100", "Baltimore", "1/1"],
+                     ["South", "4/25", "88", "Flemington", "2/2"],
+                     ["Del Val", "5/21", "100", "Baltimore", "1/1"],
+                     ["JP Case", "6/25", "88", "Flemington", "2/2"]
                     ]
 
         test_data += test_data
         test_data += test_data
+
+        self.scroll = ScrollFrame(self, data=test_data)
+        self.scroll.pack(fill=BOTH, expand=True)
+
+        self.scroll.frame.grid_columnconfigure(0, minsize=self.doc_name_label.winfo_width())
+        self.scroll.frame.grid_columnconfigure(1, weight=1)
+        self.scroll.frame.grid_columnconfigure(2, weight=1)
+        self.scroll.frame.grid_columnconfigure(3, weight=1)
+        self.scroll.frame.grid_columnconfigure(4, weight=1)
 
         r = 0
         c = 0
         for row in test_data:
             c = 0
             for col in row:
-                Label(self.survey_table, text=row[c], bg="lightyellow", anchor="w", relief=RAISED)\
+                Label(self.scroll.frame, text=row[c], bg="lightyellow", anchor="w", relief=RAISED)\
                     .grid(column=c, row=r, sticky="nswe", pady=2)
                 c +=1
             r += 1
