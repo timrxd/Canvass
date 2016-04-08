@@ -8,6 +8,7 @@ except ImportError:
     from tkinter import *
 
 from .scroll_frame import ScrollFrame
+from functools import partial
 
 
 class SelectSurvey(Frame):
@@ -76,9 +77,13 @@ class SelectSurvey(Frame):
         for row in test_data:
             c = 0
             for col in row:
-                Label(self.scroll.frame, text=row[c], bg="lightyellow", anchor="w", relief=RAISED,
-                      onclick=self.open_survey(row[0]))\
-                    .grid(column=c, row=r, sticky="nswe", pady=2)
+                l = Label(self.scroll.frame, text=row[c], bg="lightyellow", anchor="w", relief=RAISED)
+                l.grid(column=c, row=r, sticky="nswe", pady=2)
+                l.bind("<Button-1>", lambda e,link=row[0]: self.open_survey(link))
+
+                # TODO: make custom func that changes row array of labels
+                # l.bind("<Enter>", partial(color_config, text, "red"))
+                # l.bind("<Leave>", partial(color_config, text, "blue"))
                 c +=1
             r += 1
 
