@@ -10,7 +10,7 @@ import math
 
 
 class ScrollFrame(Frame):
-    def __init__(self, root, data=""):
+    def __init__(self, root, data="", values=[]):
 
         Frame.__init__(self, root)
         self.canvas = Canvas(root, borderwidth=0, background="white")
@@ -23,6 +23,7 @@ class ScrollFrame(Frame):
         self.canvas.create_window((4,4), window=self.frame, anchor="nw",
                                   tags="self.frame")
 
+        self.col_values = values
         self.frame.bind("<Configure>", self.on_frame_configure)
         self.canvas.bind_all("<MouseWheel>", self._on_mousewheel)
 
@@ -30,11 +31,12 @@ class ScrollFrame(Frame):
     def on_frame_configure(self, event):
         # Reset the scroll region to encompass the inner frame
         self.canvas.configure(scrollregion=self.canvas.bbox("all"))
-        self.frame.grid_columnconfigure(0, minsize=self.canvas.winfo_width()*0.35)
-        self.frame.grid_columnconfigure(1, minsize=self.canvas.winfo_width()*0.1)
-        self.frame.grid_columnconfigure(2, minsize=self.canvas.winfo_width()*0.1)
-        self.frame.grid_columnconfigure(3, minsize=self.canvas.winfo_width()*0.35)
-        self.frame.grid_columnconfigure(4, minsize=self.canvas.winfo_width()*0.1)
+
+        # Set column widths
+        col = 0
+        for val in self.col_values:
+            self.frame.grid_columnconfigure(col, minsize=self.canvas.winfo_width()*val)
+            col += 1
 
     # Test on linux w/ mouse
     # TODO: On mac, remove 'divide by 120'

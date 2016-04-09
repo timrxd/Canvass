@@ -19,7 +19,7 @@ class McCliff:
         self.master = window
         window.title("McCliff")
         window.minsize(width=600, height=600)
-        window.configure(background='red')  # Debug red
+        window.configure(background='aliceblue')  # Debug red
         try:
             window.state('zoomed')
         except TclError:
@@ -60,8 +60,8 @@ class McCliff:
         self.main_frame.grid(row=0, column=1, sticky="nswe")
 
         # Setup all other pages
-        self.surveys = SelectSurvey(view_frame, bg="white")
-        # self.surveys.grid(row=0, column=1, sticky="nswe")
+        self.surveys = SelectSurvey(view_frame, self, bg="white")
+        self.survey_entry = SurveyEntry(view_frame, bg="white")
 
         # Hide all sub-frames
         self.surveys.grid_forget()
@@ -72,6 +72,11 @@ class McCliff:
     def to_survey_select(self):
         self.main_frame.grid_forget()
         self.surveys.grid(row=0, column=1, sticky="nswe")
+
+    def to_survey_entry(self, survey):
+        self.surveys.grid_forget()
+        self.survey_entry.grid(row=0, column=1, sticky="nswe")
+        self.survey_entry.open_survey(survey)
 
 # end McCliff
 

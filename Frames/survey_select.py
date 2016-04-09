@@ -8,25 +8,29 @@ except ImportError:
     from tkinter import *
 
 from .scroll_frame import ScrollFrame
-from functools import partial
+
+
+def highlight_row(row, color):
+    for label in row:
+        label.config(bg=color)
 
 
 class SelectSurvey(Frame):
-    def __init__(self, parent, *args, **kwargs):
+    def __init__(self, parent, top, *args, **kwargs):
         Frame.__init__(self, parent, *args, **kwargs)
+
+        self.parent = top
 
         self.top_bar = Frame(self, bg="white")
         self.top_bar.pack(fill=BOTH, ipady=10)
 
         # Row 1: new survey button
-        self.new_survey_button = Button(self.top_bar, text=" + New Survey", bg="yellow")
+        self.new_survey_button = Button(self.top_bar, text=" + New Survey", bg="gold")
         self.new_survey_button.grid(row=1, column=2, sticky="nswe", pady=10, ipady=10)
 
         # Row 2: Search bar
         self.search_bar = Entry(self.top_bar)
         self.search_bar.grid(row=2, column=0, columnspan=5, sticky="nswe", pady=30, padx=75)
-
-        # Why are the weights different? FUCK
 
         # Row 3 Headers
         self.top_bar.grid_columnconfigure(0, weight=10)
@@ -62,32 +66,27 @@ class SelectSurvey(Frame):
 
         test_data += test_data
         test_data += test_data
+        test_data += test_data
+        test_data += test_data
 
-        self.scroll = ScrollFrame(self, data=test_data)
+        self.scroll = ScrollFrame(self, data=test_data, values=[.35, .1, .1, .35, .1])
         self.scroll.pack(fill=BOTH, expand=True)
-
-        self.scroll.frame.grid_columnconfigure(0, minsize=self.doc_name_label.winfo_width())
-        self.scroll.frame.grid_columnconfigure(1, weight=1)
-        self.scroll.frame.grid_columnconfigure(2, weight=1)
-        self.scroll.frame.grid_columnconfigure(3, weight=1)
-        self.scroll.frame.grid_columnconfigure(4, weight=1)
 
         r = 0
         c = 0
         for row in test_data:
             c = 0
+            survey_row = [None] * 5
             for col in row:
                 l = Label(self.scroll.frame, text=row[c], bg="lightyellow", anchor="w", relief=RAISED)
                 l.grid(column=c, row=r, sticky="nswe", pady=2)
-                l.bind("<Button-1>", lambda e,link=row[0]: self.open_survey(link))
+                l.bind("<Button-1>", lambda e, link=row[0], main=self.parent: main.to_survey_entry(link))
+                survey_row[c] = l
+                c += 1
 
-                # TODO: make custom func that changes row array of labels
-                # l.bind("<Enter>", partial(color_config, text, "red"))
-                # l.bind("<Leave>", partial(color_config, text, "blue"))
-                c +=1
+            for label in survey_row:
+                label.bind("<Enter>", lambda e, x=survey_row: highlight_row(x, 'yellow'))
+                label.bind("<Leave>", lambda e, x=survey_row: highlight_row(x, 'lightyellow'))
             r += 1
-
-    def open_survey(self, name):
-        print(name)
 
 # end
