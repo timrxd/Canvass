@@ -8,9 +8,10 @@ IMPORTANT
  - 
 
 
+THINK ABOUT
+ - destroy widgets no longer used
 
 
 NOT
  - fix survey select header/table ratios
- - scroll wheel bindings for survey select scroll bar
  - lol updater

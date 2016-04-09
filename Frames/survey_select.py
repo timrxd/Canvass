@@ -69,7 +69,7 @@ class SelectSurvey(Frame):
         test_data += test_data
         test_data += test_data
 
-        self.scroll = ScrollFrame(self, data=test_data, values=[.35, .1, .1, .35, .1])
+        self.scroll = ScrollFrame(self, values=[.35, .1, .1, .35, .1])
         self.scroll.pack(fill=BOTH, expand=True)
 
         r = 0

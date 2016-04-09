@@ -10,7 +10,7 @@ import math
 
 
 class ScrollFrame(Frame):
-    def __init__(self, root, data="", values=[]):
+    def __init__(self, root, values=[]):
 
         Frame.__init__(self, root)
         self.canvas = Canvas(root, borderwidth=0, background="white")
