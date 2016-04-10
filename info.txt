@@ -11,6 +11,9 @@ Raspberry Pi Info:
  as hpr:
      mysql -u hpr -p
      password: hunterdon   
+
+ Lab Ethernet:
+ 	ssh 144.126.12.11 -l pi
   
 http://raspberrywebserver.com/sql-databases/using-mysql-on-a-raspberry-pi.html
 
