@@ -1,0 +1,16 @@
+Raspberry Pi Info:
+
+ username: pi
+ password: hunterdon
+
+ mysql username: root
+ mysql password: hunterdon
+ run mysql: 
+     mysql -u root -p
+
+ as hpr:
+     mysql -u hpr -p
+     password: hunterdon   
+  
+http://raspberrywebserver.com/sql-databases/using-mysql-on-a-raspberry-pi.html
+
