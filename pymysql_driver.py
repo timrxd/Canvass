@@ -17,6 +17,7 @@ cursor = connection.cursor()
 # Test
 cursor.execute("SELECT * FROM test;")
 data = cursor.fetchall()
+print(data)
 for line in data:
     for val in line:
         print(val)
