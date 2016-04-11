@@ -10,6 +10,9 @@ IMPORTANT
 
 THINK ABOUT
  - destroy widgets no longer used
+ - DRM - enter a code on startup which goes into config file
+	- program wont load until code is input
+	- hash code so multiple will work?
 
 
 NOT
