@@ -15,7 +15,9 @@ Raspberry Pi Info:
  Lab Ethernet:
  	ssh 144.126.12.11 -l pi
  	ssh pi@144.126.12.11
-  
+
+GRANT ALL ON foo.* TO bar@'202.54.10.20' IDENTIFIED BY 'PASSWORD';
+
 http://raspberrywebserver.com/sql-databases/using-mysql-on-a-raspberry-pi.html
 
 peewee needs to go in required packages, etc.

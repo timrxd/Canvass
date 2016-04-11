@@ -1,19 +1,14 @@
 __author__ = 'Tim'
 
-import sys
-print(sys.path)
-sys.path.append('/usr/lib/python2.7/site-packages')
-print(sys.path)
-
 import pymysql
 
 # Connect to the database
 connection = pymysql.connect(host='144.126.12.11',
-                             user='hpr',
-                             password='hunterdon',
-                             db='surveys',
-                             charset='utf8mb4',
-                             cursorclass=pymysql.cursors.DictCursor)
+                        user='hpr',
+                        password='hunterdon',
+                        db='surveys',
+                        charset='utf8mb4',
+                        cursorclass=pymysql.cursors.DictCursor)
 
 
 # prepare a cursor object using cursor() method
