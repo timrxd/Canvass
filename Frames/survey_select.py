@@ -1,5 +1,5 @@
-__author__ = 'Tim'
-
+from .scroll_frame import ScrollFrame
+import pymysql
 try:
     # for Python2
     from Tkinter import *
@@ -7,7 +7,6 @@ except ImportError:
     # for Python3
     from tkinter import *
 
-from .scroll_frame import ScrollFrame
 
 
 def highlight_row(row, color):
@@ -56,31 +55,49 @@ class SelectSurvey(Frame):
         self.date.grid(row=h_row, column=4, sticky="nswe")
 
         # Eventually SQL call
-        test_data = [["Loyola", "2/21", "100", "Baltimore", "1/1"],
-                     ["Central", "1/25", "88", "Flemington", "2/2"],
-                     ["North", "3/21", "100", "Baltimore", "1/1"],
-                     ["South", "4/25", "88", "Flemington", "2/2"],
-                     ["Del Val", "5/21", "100", "Baltimore", "1/1"],
-                     ["JP Case", "6/25", "88", "Flemington", "2/2"]
-                    ]
+        # test_data = [["Loyola", "2/21", "100", "Baltimore", "1/1"],
+        #              ["Central", "1/25", "88", "Flemington", "2/2"],
+        #              ["North", "3/21", "100", "Baltimore", "1/1"],
+        #              ["South", "4/25", "88", "Flemington", "2/2"],
+        #              ["Del Val", "5/21", "100", "Baltimore", "1/1"],
+        #              ["JP Case", "6/25", "88", "Flemington", "2/2"]
+        #             ]
+        #
+        # test_data += test_data
+        # test_data += test_data
+        # test_data += test_data
+        # test_data += test_data
 
-        test_data += test_data
-        test_data += test_data
-        test_data += test_data
-        test_data += test_data
+        # Connect to the database
+        connection = pymysql.connect(host='cs-database.cs.loyola.edu',
+                                     user='tjdowd',
+                                     password='1638385',
+                                     db='tjdowd',
+                                     charset='utf8mb4',
+                                     cursorclass=pymysql.cursors.DictCursor)
+
+        # prepare a cursor object using cursor() method
+        cursor = connection.cursor()
+
+        # Test
+        cursor.execute("SELECT * FROM survey_list;")
+        data = cursor.fetchall()
 
         self.scroll = ScrollFrame(self, values=[.35, .1, .1, .35, .1])
         self.scroll.pack(fill=BOTH, expand=True)
 
         r = 0
         c = 0
-        for row in test_data:
+        for row in data:
             c = 0
             survey_row = [None] * 5
-            for col in row:
-                l = Label(self.scroll.frame, text=row[c], bg="lightyellow", anchor="w", relief=RAISED)
+
+            line = [row["name"], row["lastmod"], row["responses"], row["location"], row["eventdate"]]
+
+            for col in line:
+                l = Label(self.scroll.frame, text=line[c], bg="lightyellow", anchor="w", relief=RAISED)
                 l.grid(column=c, row=r, sticky="nswe", pady=2)
-                l.bind("<Button-1>", lambda e, link=row[0], main=self.parent: main.to_survey_entry(link))
+                l.bind("<Button-1>", lambda e, link=line[0], main=self.parent: main.to_survey_entry(link))
                 survey_row[c] = l
                 c += 1
 
@@ -88,5 +105,9 @@ class SelectSurvey(Frame):
                 label.bind("<Enter>", lambda e, x=survey_row: highlight_row(x, 'yellow'))
                 label.bind("<Leave>", lambda e, x=survey_row: highlight_row(x, 'lightyellow'))
             r += 1
+
+        # disconnect from server
+        connection.close()
+
 
 # end
