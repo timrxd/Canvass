@@ -8,7 +8,6 @@ except ImportError:
     from tkinter import *
 
 
-
 def highlight_row(row, color):
     for label in row:
         label.config(bg=color)
@@ -26,6 +25,7 @@ class SelectSurvey(Frame):
         # Row 1: new survey button
         self.new_survey_button = Button(self.top_bar, text=" + New Survey", bg="gold")
         self.new_survey_button.grid(row=1, column=2, sticky="nswe", pady=10, ipady=10)
+        self.new_survey_button.bind("<Button-1>", lambda e, main=self.parent: main.to_new_survey())
 
         # Row 2: Search bar
         self.search_bar = Entry(self.top_bar)
@@ -78,8 +78,6 @@ class SelectSurvey(Frame):
 
         # prepare a cursor object using cursor() method
         cursor = connection.cursor()
-
-        # Test
         cursor.execute("SELECT * FROM survey_list;")
         data = cursor.fetchall()
 

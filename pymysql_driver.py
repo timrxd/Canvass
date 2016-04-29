@@ -15,7 +15,7 @@ connection = pymysql.connect(host='cs-database.cs.loyola.edu',
 cursor = connection.cursor()
 
 # Test
-cursor.execute("SELECT * FROM survey_list;")
+cursor.execute("SELECT * FROM fake;")
 data = cursor.fetchall()
 print(data)
 for line in data:
