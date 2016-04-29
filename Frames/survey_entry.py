@@ -28,7 +28,7 @@ class SurveyEntry(Frame):
         self.submit_button = Button(self.scroll.frame, text="Submit", bg="gold")
         self.submit_button.bind("<Button-1>", lambda e: self.submit_survey())
 
-        self.error_label = Label(self.scroll.frame, text = "[!] Some entries are missing.", fg="red")
+        self.error_label = Label(self.scroll.frame, text="[!] Some entries are missing.", fg="red")
 
     def test(self):
         print "cool"
@@ -62,14 +62,14 @@ class SurveyEntry(Frame):
             r = 1
             for q in data:
                 panel = Frame(self.scroll.frame, bg=self.bg_color)
-                panel.grid(column=0, row=r, sticky='nswe', pady=20)
+                panel.grid(column=0, row=r, sticky='nswe', pady=20, ipadx=15, ipady=10)
 
                 question = Label(panel, text="Question " + str(r) + ": " + q["Field"], anchor=W, bg=self.bg_color)
-                question.pack(fill=X, pady=10)
+                question.pack(fill=X, pady=20, padx=15)
                 panel.q = q["Field"]
 
                 answer = Entry(panel)
-                answer.pack(fill=X, pady=10)
+                answer.pack(fill=X, pady=0, padx=15)
                 panel.a = answer
                 answer.bind("<Return>", lambda e: self.submit_survey())
                 answer.bind("<FocusOut>", lambda e: self.check_entries())
@@ -77,7 +77,7 @@ class SurveyEntry(Frame):
                 r += 1
                 self.q_list.append(panel)
 
-            self.submit_button.grid(column=0, row=r, pady=20)
+            self.submit_button.grid(column=0, row=r, pady=10)
 
         except pymysql.err.ProgrammingError:
             self.title.config(text="Survey not found.")

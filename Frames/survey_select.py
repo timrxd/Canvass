@@ -54,20 +54,15 @@ class SelectSurvey(Frame):
         self.date = Label(self.top_bar, text="Event Date", bg="lightgray", relief=RAISED, anchor="w")
         self.date.grid(row=h_row, column=4, sticky="nswe")
 
-        # Eventually SQL call
-        # test_data = [["Loyola", "2/21", "100", "Baltimore", "1/1"],
-        #              ["Central", "1/25", "88", "Flemington", "2/2"],
-        #              ["North", "3/21", "100", "Baltimore", "1/1"],
-        #              ["South", "4/25", "88", "Flemington", "2/2"],
-        #              ["Del Val", "5/21", "100", "Baltimore", "1/1"],
-        #              ["JP Case", "6/25", "88", "Flemington", "2/2"]
-        #             ]
-        #
-        # test_data += test_data
-        # test_data += test_data
-        # test_data += test_data
-        # test_data += test_data
+        self.survey_list = []
 
+        self.scroll = ScrollFrame(self, values=[.35, .1, .1, .35, .1])
+        self.scroll.pack(fill=BOTH, expand=True)
+
+        # Get and place all surveys in the table
+        self.refresh()
+
+    def refresh(self):
         # Connect to the database
         connection = pymysql.connect(host='cs-database.cs.loyola.edu',
                                      user='tjdowd',
@@ -81,8 +76,11 @@ class SelectSurvey(Frame):
         cursor.execute("SELECT * FROM survey_list;")
         data = cursor.fetchall()
 
-        self.scroll = ScrollFrame(self, values=[.35, .1, .1, .35, .1])
-        self.scroll.pack(fill=BOTH, expand=True)
+        # disconnect from server
+        connection.close()
+
+        for widget in self.scroll.frame.winfo_children():
+            widget.destroy()
 
         r = 0
         c = 0
@@ -103,9 +101,5 @@ class SelectSurvey(Frame):
                 label.bind("<Enter>", lambda e, x=survey_row: highlight_row(x, 'yellow'))
                 label.bind("<Leave>", lambda e, x=survey_row: highlight_row(x, 'lightyellow'))
             r += 1
-
-        # disconnect from server
-        connection.close()
-
 
 # end

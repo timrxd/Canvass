@@ -1,26 +1,24 @@
-__author__ = 'Tim'
-
+import math
 try:
     # for Python2
     from Tkinter import *
 except ImportError:
     # for Python3
     from tkinter import *
-import math
 
 
 class ScrollFrame(Frame):
     def __init__(self, root, values=[]):
 
         Frame.__init__(self, root)
-        self.canvas = Canvas(root, borderwidth=0, background="white")
+        self.canvas = Canvas(root, borderwidth=0, background="white", highlightthickness=0)
         self.frame = Frame(self.canvas, background="white")
         self.vsb = Scrollbar(root, orient="vertical", command=self.canvas.yview)
         self.canvas.configure(yscrollcommand=self.vsb.set)
 
         self.vsb.pack(side="right", fill="y")
-        self.canvas.pack(side="left", fill="both", expand=True)
-        self.canvas.create_window((4,4), window=self.frame, anchor="nw",
+        self.canvas.pack(side="left", fill="both", expand=True, padx=15)
+        self.canvas.create_window((4, 4), window=self.frame, anchor="nw",
                                   tags="self.frame")
 
         self.col_values = values

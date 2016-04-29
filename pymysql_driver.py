@@ -4,11 +4,11 @@ import pymysql
 
 # Connect to the database
 connection = pymysql.connect(host='cs-database.cs.loyola.edu',
-                        user='tjdowd',
-                        password='1638385',
-                        db='tjdowd',
-                        charset='utf8mb4',
-                        cursorclass=pymysql.cursors.DictCursor)
+                                  user='tjdowd',
+                                  password='1638385',
+                                  db='tjdowd',
+                                  charset='utf8mb4',
+                                  cursorclass=pymysql.cursors.DictCursor)
 
 
 # prepare a cursor object using cursor() method

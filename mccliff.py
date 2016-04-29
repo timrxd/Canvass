@@ -67,7 +67,7 @@ class McCliff:
         # Setup all other pages
         self.surveys = SelectSurvey(view_frame, self, bg="white")
         self.survey_entry = SurveyEntry(view_frame, bg="white")
-        self.new_survey = NewSurvey(view_frame, bg="white")
+        self.new_survey = NewSurvey(view_frame, self, bg="white")
 
         # Hide all sub-frames
         self.surveys.grid_forget()
@@ -87,6 +87,7 @@ class McCliff:
         self.new_survey.grid_forget()
         self.surveys.grid(row=0, column=1, sticky="nswe")
         self.back_button.bind("<Button-1>", lambda e: self.to_main_menu())
+        self.surveys.refresh()
 
     def to_survey_entry(self, survey):
         self.surveys.grid_forget()
