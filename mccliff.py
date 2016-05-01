@@ -59,26 +59,27 @@ class McCliff:
         self.right_space = Label(right_frame, width=7, bg='aliceblue')
         self.right_space.pack(anchor='nw', padx=10, pady=10)
 
-        # Initialize with MainPage
-        self.main_frame = MainPage(view_frame, bg="white")
-        self.main_frame.survey_button.configure(command=self.to_survey_select)
-        self.main_frame.grid(row=0, column=1, sticky="nswe")
-
-        # Setup all other pages
+        # Initialize all pages
+        self.main_frame = MainPage(view_frame, self, bg="white")
         self.surveys = SelectSurvey(view_frame, self, bg="white")
         self.survey_entry = SurveyEntry(view_frame, bg="white")
         self.new_survey = NewSurvey(view_frame, self, bg="white")
+        self.analysis_selector = AnalysisSelector(view_frame, self, bg="white")
+        self.survey_analysis = AnalyzeSurvey(view_frame, bg="white")
 
         # Hide all sub-frames
+        self.main_frame.grid(row=0, column=1, sticky="nswe")
         self.surveys.grid_forget()
         self.survey_entry.grid_forget()
         self.new_survey.grid_forget()
+        self.analysis_selector.grid_forget()
 
     def close_window(self):
         self.master.quit()
 
     def to_main_menu(self):
         self.surveys.grid_forget()
+        self.analysis_selector.grid_forget()
         self.main_frame.grid(row=0, column=1, sticky="nswe")
 
     def to_survey_select(self):
@@ -101,6 +102,18 @@ class McCliff:
         self.new_survey.reset()
         self.back_button.bind("<Button-1>", lambda e: self.to_survey_select())
 
+    def to_analysis_selector(self):
+        self.main_frame.grid_forget()
+        self.survey_analysis.grid_forget()
+        self.analysis_selector.grid(row=0, column=1, sticky="nswe")
+        self.back_button.bind("<Button-1>", lambda e: self.to_main_menu())
+        self.analysis_selector.refresh()
+
+    def to_analyze_survey(self, survey):
+        self.analysis_selector.grid_forget()
+        self.survey_analysis.grid(row=0, column=1, sticky="nswe")
+        self.survey_analysis.open_survey(survey)
+        self.back_button.bind("<Button-1>", lambda e: self.to_analysis_selector())
 
 # end McCliff
 

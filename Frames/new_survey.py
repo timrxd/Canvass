@@ -109,18 +109,20 @@ class NewSurvey(Frame):
 
         panel.label = Label(panel, text="Question " + str(len(self.q_list)), anchor="w", font=("Times", 18),
                             bg=self.bg_color)
-        panel.label.pack(pady=5, fill=X)
+        panel.label.pack(pady=5, fill=X, padx=15)
 
         panel.question = Text(panel, height=3)
         panel.question.pack(padx=15, pady=5, ipady=10, fill=X)
 
+        type = Frame(panel)
+
         panel.label2 = Label(panel, text="Question Type:", anchor="w", bg=self.bg_color)
-        panel.label2.pack(pady=5, fill=X)
+        panel.label2.pack(pady=5, fill=X, padx=15, side=LEFT)
 
         panel.q_type = StringVar(panel)
         panel.q_type.set("String")
         panel.type_select = OptionMenu(panel, panel.q_type, "String", "Number", "True/False")
-        panel.type_select.pack(pady=5, side=LEFT)
+        panel.type_select.pack(pady=15, side=LEFT)
 
         r = self.add_button.grid_info()["row"]
         self.add_button.grid_forget()
